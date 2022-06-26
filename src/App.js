@@ -20,9 +20,9 @@ const App = () => {
     <div className="App">
       <div className="container">
         <div className="header-container">
-          <p className="header gradient-text">My NFT Collection</p>
+          <p className="header gradient-text">Welcome to the Whiskey Network</p>
           <p className="sub-text">
-            Each unique. Each beautiful. Discover your NFT today.
+          Reach new customers, gain inventory insights and access secondary market revenue <br /> for limited release whiskeys through NFTs.
           </p>
           {renderNotConnectedContainer()}
         </div>
