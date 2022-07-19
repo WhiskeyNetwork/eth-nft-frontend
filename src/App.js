@@ -179,7 +179,7 @@ const App = () => {
             </button>
           )}
           <br/>
-          <button onClick={null} className="cta-button connect-wallet-button">🌊 View Collection on OpenSea</button>
+          {/* <button onClick={null} className="cta-button connect-wallet-button">🌊 View Collection on OpenSea</button> */}
           </div>
         </div>
         <div className="footer-container">
