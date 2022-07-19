@@ -162,20 +162,25 @@ const App = () => {
   return (
     <div className="App">
       <div className="container">
+      <p className="header gradient-text">Welcome to the Whiskey Network</p>
         <div className="header-container">
-          <p className="header gradient-text">Welcome to the Whiskey Network</p>
+          <img alt="Whiskey Network Logo" className="wn-primary" src="https://whiskeynetwork.s3.us-east-2.amazonaws.com/wn-logo-primary.jpg"></img>
+          <div className='header-content-container'>
           <p className="sub-text">
           Reach new customers, gain inventory insights and access secondary market revenue for limited release whiskeys through NFTs.
           </p>
+          <a className="footer-text" target="_blank" rel="noreferrer" href="https://mirror.xyz/mattmcg.eth/hdxhOGIRXMRv9AqoCGI8BmPlFjzgl81xVnPIMZDZGqg">Read More</a>
+          <br />
           {currentAccount === "" ? (
             renderNotConnectedContainer()
           ) : (
-            <button onClick={askContractToMint} className="cta-button connect-wallet-button">
+            <button onClick={askContractToMint} className="cta-button wallet-button">
               Mint NFT
             </button>
           )}
           <br/>
           <button onClick={null} className="cta-button connect-wallet-button">🌊 View Collection on OpenSea</button>
+          </div>
         </div>
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />

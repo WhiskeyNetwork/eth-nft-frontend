@@ -16,7 +16,21 @@
 .header-container {
   padding-top: 30px;
   display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+ 
+.head-content-container {
+  width: 50%;
+  display: flex;
   flex-direction: column;
+  justify-content: center;
+} 
+
+.wallet-button {
+  background: -webkit-linear-gradient(left, #C08329, #3C2415);
+  background-size: 200% 200%;
+  align-self: center;
 }
 
 .header {
@@ -25,11 +39,14 @@
   font-weight: bold;
 }
 
+.wn-primary {
+  height: 600px;
+  width: 600px;
+}
+
 .sub-text {
   font-size: 25px;
   color: white;
-  width: 500px;
-  align-self: center;
 }
 
 .gradient-text {
@@ -42,7 +59,7 @@
 .cta-button {
   height: 45px;
   border: 0;
-  width: 30%;
+  width: auto;
   padding-left: 40px;
   padding-right: 40px;
   border-radius: 5px;
@@ -50,13 +67,14 @@
   font-size: 16px;
   font-weight: bold;
   color: white;
-  align-self: center;
+  margin: 10px;
 }
 
 .connect-wallet-button {
   background: -webkit-linear-gradient(left, #C08329, #3C2415);
   background-size: 200% 200%;
   animation: gradient-animation 4s ease infinite;
+  width: 300px;
 }
 
 .mint-button {
@@ -92,6 +110,11 @@
   color: white;
   font-size: 16px;
   font-weight: bold;
+}
+
+.eth-address {
+  color: white;
+  font-size: 16px;
 }
 
 /* KeyFrames */
