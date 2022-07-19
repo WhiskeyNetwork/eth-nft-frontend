@@ -10,7 +10,21 @@ const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 const OPENSEA_LINK = '';
 const TOTAL_MINT_COUNT = 50;
 
+  //Deployed contract address
+  //every time contract is deployed, this AND abi needs to be updated
+  const CONTRACT_ADDRESS = "0x4614241A05582e87a90068c4D8e78084312E9640"; 
+
 const App = () => {
+
+  //TODO: Ensure user connected to right network
+//   let chainId = await ethereum.request({ method: 'eth_chainId' });
+// console.log("Connected to chain " + chainId);
+
+// // String, hex code of the chainId of the Rinkebey test network
+// const rinkebyChainId = "0x4"; 
+// if (chainId !== rinkebyChainId) {
+// 	alert("You are not connected to the Rinkeby Test Network!");
+// }
 
   //state variable to store user's public wallet. useState is dependency
   const [currentAccount, setCurrentAccount] = useState("");
@@ -37,6 +51,9 @@ const App = () => {
     console.log("Found an authorized account", account);
     //set the connected account to said account
     setCurrentAccount(account);
+    // Setup listener: This is for the case where a user comes to our site
+    // and ALREADY had their wallet connected + authorized.
+    setupEventListener()
   } else {
     console.log("No authorized account found.");
   }
@@ -58,15 +75,42 @@ const App = () => {
       console.log("Connected", accounts[0]);
       //reset the current account to the first account that's connected
       setCurrentAccount(accounts[0]);
+      // Setup listener: This is for the case where a user comes to our site
+      // and connected their wallet for the first time
+      setupEventListener()
     } catch (err) {
       console.log(err);
     }
   }
 
+  const setupEventListener = async() => {
+    try {
+      const { ethereum } = window;
+
+      if (ethereum) {
+        //ethers is a library that helps our frontend talk to our contract
+        //provider talks to eth nodes
+        const provider = new ethers.providers.Web3Provider(ethereum);
+        const signer = provider.getSigner();
+        //creates the connection to our contract 
+        //contract's address, abi file, and signer are the 3 things are always needed to communicate with contracts on the blockchain.
+        const connectedContract = new ethers.Contract(CONTRACT_ADDRESS, WhiskeyNFT.abi, signer);
+
+        //Equivalent of a webhook to "capture" our event when our contract throws it.
+        connectedContract.on("NewWhiskeyNFTMinted", (from, tokenId) =>{
+          console.log(from, tokenId.toNumber())
+          alert(`Your NFT has been minted! It might take up to 10 minutes to be revealed on OpenSea but here's the link: https://testnets.opensea.io/assets/${CONTRACT_ADDRESS}/${tokenId.toNumber()}`)
+        });
+        console.log("Setup event listener");
+      } else {
+        console.log("ethereum object cannot be found.")
+      }
+    } catch(err) {
+      console.log(err);
+    }
+  }
+
   const askContractToMint = async () => {
-    //Deployed contract address
-    //every time contract is deployed, this AND abi needs to be updated
-    const CONTRACT_ADDRESS = "0xa1631f0460826E5DBE8748D971d3C480681758Aa"; 
 
     try {
       const { ethereum } = window;
@@ -92,6 +136,7 @@ const App = () => {
 
         console.log("Mining...please wait.")
         await nftTxn.wait();
+        //TODO: Put in animation to let user know contract is actively being minted
 
         console.log(`Mined, see transaction: https://rinkeby.etherscan.io/tx/${nftTxn.hash}`);
       } else {
@@ -129,7 +174,8 @@ const App = () => {
               Mint NFT
             </button>
           )}
-          {/* {renderNotConnectedContainer()} */}
+          <br/>
+          <button onClick={null} className="cta-button connect-wallet-button">🌊 View Collection on OpenSea</button>
         </div>
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
